@@ -49,9 +49,8 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 			indexExpr, queryPreferenceMode, tagSetValue;
 
 	private Combo queryPreferenceModeCombo;
-	private Text batchSizeText, docSearchLimitText, maxSkipDocText,
-			indexExprText, tagSetText;
-	private Button noTimeOutCheckbox, allowPartialResultsCheckbox,
+	private Text batchSizeText, docSearchLimitText, maxSkipDocText,tagSetText;
+	private Button allowPartialResultsCheckbox,
 			flattenNestedDocCheckbox;
 	private boolean noTimeOut, allowsPartialResults, flattenNestedDocument;
 
