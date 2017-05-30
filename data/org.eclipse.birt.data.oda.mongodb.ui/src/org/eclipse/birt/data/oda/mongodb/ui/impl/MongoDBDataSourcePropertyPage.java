@@ -16,9 +16,7 @@ import java.util.Properties;
 import org.eclipse.datatools.connectivity.oda.design.ui.pages.impl.DefaultDataSourcePropertyPage;
 import org.eclipse.swt.widgets.Composite;
 
-public class MongoDBDataSourcePropertyPage
-		extends
-			DefaultDataSourcePropertyPage
+public class MongoDBDataSourcePropertyPage extends DefaultDataSourcePropertyPage
 {
 
 	private MongoDBDataSourcePageHelper pageHelper;
@@ -28,20 +26,20 @@ public class MongoDBDataSourcePropertyPage
 		super( );
 	}
 
-	protected void createAndInitCustomControl( Composite parent,
-			Properties profileProps )
+	protected void createAndInitCustomControl( Composite parent, Properties profileProps )
 	{
 		pageHelper = new MongoDBDataSourcePageHelper( this );
 		pageHelper.createPageControls( parent );
 		pageHelper.initPageControls( profileProps );
 	}
 
-    protected void refresh( Properties customConnectionProps  )
-    {
-        if( pageHelper != null )
-        	pageHelper.initPageControls( customConnectionProps );
+	protected void refresh( Properties customConnectionProps )
+	{
+		if ( pageHelper != null )
+			pageHelper.initPageControls( customConnectionProps );
 
-        // enable/disable all controls on page based on the editable session state
+		// enable/disable all controls on page based on the editable session
+		// state
 		boolean isSessionEditable = isSessionEditable( );
 		enableAllControls( getControl( ), isSessionEditable );
 		if ( isSessionEditable && pageHelper != null )
@@ -49,7 +47,7 @@ public class MongoDBDataSourcePropertyPage
 			pageHelper.resetURIEditControlStatus( );
 			pageHelper.handleKerberosAuthenticationSelection( );
 		}
-    }
+	}
     
     public Properties collectCustomProperties( Properties profileProps )
     {
