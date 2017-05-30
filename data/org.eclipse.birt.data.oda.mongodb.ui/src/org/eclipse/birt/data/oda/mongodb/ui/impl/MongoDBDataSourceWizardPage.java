@@ -25,7 +25,7 @@ public class MongoDBDataSourceWizardPage extends DataSourceWizardPage
 
 	private Properties properties;
 	private String DEFAULT_MESSAGE = Messages.getString( "MongoDBDataSourceWizardPage.message.default" ); //$NON-NLS-1$
-	
+
 	// MongoDBDataSourcePageHelper is in charge of layouting the page controls
 	private MongoDBDataSourcePageHelper pageHelper;
 
