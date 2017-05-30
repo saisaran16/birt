@@ -214,7 +214,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 		GridData groupGd = new GridData( GridData.FILL_HORIZONTAL );
 		groupGd.horizontalSpan = 2;
 		group.setLayoutData( groupGd );
-		
+
 		Label modeLabel = new Label( group, SWT.NONE );
 		modeLabel.setText( Messages.getString( "MongoDBAdvancedSettingsDialog.Label.QueryCursorPreference.Mode" ) ); //$NON-NLS-1$
 		modeLabel.setToolTipText( Messages.getString( "MongoDBAdvancedSettingsDialog.Tooltip.QueryCursorPreference.Mode" ) ); //$NON-NLS-1$
@@ -225,7 +225,8 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 
 			public void widgetSelected( SelectionEvent e )
 			{
-				queryPreferenceMode = queryPreferenceModeCombo.getText( ).trim( );
+				queryPreferenceMode = queryPreferenceModeCombo.getText( )
+						.trim( );
 				updateTagSetTextStatus( );
 			}
 
@@ -250,7 +251,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 			}
 
 		} );
-		
+
 		initQueryCursorPreferenceSelection( );
 	}
 
@@ -262,7 +263,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 		queryPreferenceModeCombo.add( ReadPreferenceChoice.SECONDARY_PREFERRED.displayName( ) );
 		queryPreferenceModeCombo.add( ReadPreferenceChoice.NEAREST.displayName( ) );
 
-		queryPreferenceModeCombo.select( 0 );			
+		queryPreferenceModeCombo.select( 0 );
 	}
 	
 	private void updateTagSetTextStatus( )
@@ -339,7 +340,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 		{
 			queryPreferenceModeCombo.setText( queryPreferenceMode );
 		}
-		
+
 		if ( tagSetValue != null )
 		{
 			tagSetText.setText( tagSetValue );
@@ -388,7 +389,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 		{
 			tagSetValue = ""; //$NON-NLS-1$
 		}
-		
+
 		this.indexExpr = String.valueOf( queryProps.getIndexHints( ) );
 		this.noTimeOut = queryProps.hasNoTimeOut( );
 		this.flattenNestedDocument = queryProps.isAutoFlattening( );
@@ -405,7 +406,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 		{
 			queryProps.setNumDocsToSkip( null );
 		}
-		
+
 		if ( hasBatchSize( ) )
 		{
 			queryProps.setBatchSize( getMaxBatchSize( ) );
@@ -433,7 +434,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 		{
 			queryProps.setQueryReadPreference( queryPreferenceMode );
 		}
-		
+
 		if ( tagSetValue != null )
 		{
 			queryProps.setQueryReadPreferenceTags( tagSetValue );
