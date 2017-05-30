@@ -47,8 +47,7 @@ public class DataSetMetaData implements IDataSetMetaData
 	 * getDataSourceObjects(java.lang.String, java.lang.String,
 	 * java.lang.String, java.lang.String)
 	 */
-	public IResultSet getDataSourceObjects( String catalog, String schema,
-			String object, String version ) throws OdaException
+	public IResultSet getDataSourceObjects( String catalog, String schema,String object, String version ) throws OdaException
 	{
 		throw new UnsupportedOperationException( );
 	}
@@ -89,7 +88,7 @@ public class DataSetMetaData implements IDataSetMetaData
 	public String getDataSourceProductVersion( ) throws OdaException
 	{
 		return Integer.toString( getDataSourceMajorVersion( ) ) + "." + //$NON-NLS-1$
-				Integer.toString( getDataSourceMinorVersion( ) );
+		Integer.toString( getDataSourceMinorVersion( ) );
 	}
 
 	/*
