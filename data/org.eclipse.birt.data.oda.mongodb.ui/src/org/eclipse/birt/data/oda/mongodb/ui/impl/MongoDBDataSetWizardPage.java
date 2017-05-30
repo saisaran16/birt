@@ -93,8 +93,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	private Text DBNameText, docNumText;
 	private Combo opTypeCombo, collectionCombo;
 	private Button addBtn, addAllBtn, removeBtn, removeAllBtn, upBtn, downBtn;
-	private Button sysCollOption, refreshBtn, cmdExprBtn, findFieldsBtn,
-			queryExprBtn, sortExprBtn;
+	private Button sysCollOption, refreshBtn, cmdExprBtn, findFieldsBtn,queryExprBtn, sortExprBtn;
 	private TreeViewer availableFieldsViewer;
 	private TableViewer selectedFieldsTable;
 	private Label opTypeLabel, DBNameLabel;
@@ -107,8 +106,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	private List<FieldMetaData> selectedFields, allAvailableFields;
 
 	private DataSetDesign dataSetDesign;
-	private String collectionName, oldCollectionName, queryText, cmdExprValue,
-			queryExpr, sortExpr;
+	private String collectionName, oldCollectionName, queryText, cmdExprValue,queryExpr, sortExpr;
 	private CommandOperationType opType;
 	private int searchLimit;
 	private boolean includeSysColl;
@@ -135,8 +133,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	 * @param title
 	 * @param titleImage
 	 */
-	public MongoDBDataSetWizardPage( String pageName, String title,
-			ImageDescriptor titleImage )
+	public MongoDBDataSetWizardPage( String pageName, String title,ImageDescriptor titleImage )
 	{
 		super( pageName, title, titleImage );
 		setMessage( DEFAULT_MESSAGE );
@@ -182,8 +179,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 					String errorMsg = UIHelper.getUserErrorMessage( "MongoDBDataSetWizardPage.MessageDialog.ErrorMessage.InitPage", e ); //$NON-NLS-1$
 					ExceptionHandler.showException( sComposite.getShell( ),
 							Messages.getString( "MongoDBDataSetWizardPage.MessageDialog.title.GeneralError" ), //$NON-NLS-1$
-							errorMsg,
-							e );
+							errorMsg,e );
 				}
 			} );
 
@@ -275,8 +271,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			public void widgetSelected( SelectionEvent e )
 			{
 
-				MongoDBAdvancedSettingsDialog settingsDialog = new MongoDBAdvancedSettingsDialog( Display.getDefault( )
-						.getActiveShell( ) );
+				MongoDBAdvancedSettingsDialog settingsDialog = new MongoDBAdvancedSettingsDialog( Display.getDefault( ).getActiveShell( ) );
 
 				settingsDialog.initQueryProps( queryProps );
 
@@ -311,8 +306,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		if ( !queryProps.hasRuntimeMetaDataSearchLimit( ) )
 			return;
 
-		int runtimeLimit = queryProps.getRuntimeMetaDataSearchLimit( )
-				.intValue( );
+		int runtimeLimit = queryProps.getRuntimeMetaDataSearchLimit( ).intValue( );
 		if ( runtimeLimit < this.searchLimit )
 		{
 			MessageDialog infoDialog = new MessageDialog( sComposite.getShell( ),
@@ -322,8 +316,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 					MessageDialog.INFORMATION,
 					new String[]{
 						Messages.getString( "MongoDBAdvancedSettingsDialog.MessageDialog.synchronizeSearchLimit.button" )
-					},
-					0 );
+					},0 );
 			if ( infoDialog.open( ) == Window.OK )
 			{
 				this.searchLimit = runtimeLimit;
@@ -368,8 +361,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		Label label = new Label( leftComposite, SWT.NONE );
 		label.setText( Messages.getString( "MongoDBDataSetWizardPage.label.AvailableFields" ) ); //$NON-NLS-1$
 
-		availableFieldsViewer = new TreeViewer( leftComposite, SWT.BORDER
-				| SWT.MULTI );
+		availableFieldsViewer = new TreeViewer( leftComposite, SWT.BORDER | SWT.MULTI );
 		GridData gd = new GridData( GridData.FILL_BOTH );
 		gd.heightHint = 300;
 		gd.widthHint = 180;
@@ -379,8 +371,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		availableFieldsViewer.setContentProvider( provider );
 		availableFieldsViewer.setLabelProvider( provider );
 
-		availableFieldsViewer.getTree( )
-				.addSelectionListener( new SelectionListener( ) {
+		availableFieldsViewer.getTree( ).addSelectionListener( new SelectionListener( ) {
 
 					public void widgetSelected( SelectionEvent e )
 					{
@@ -406,9 +397,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		Label label = new Label( rightComposite, SWT.NONE );
 		label.setText( Messages.getString( "MongoDBDataSetWizardPage.label.SelectedFields" ) ); //$NON-NLS-1$
 
-		selectedFieldsTable = new TableViewer( rightComposite,
-				SWT.FULL_SELECTION
-						| SWT.MULTI | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL );
+		selectedFieldsTable = new TableViewer( rightComposite,SWT.FULL_SELECTION | SWT.MULTI | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL );
 		GridData gd = new GridData( GridData.FILL_BOTH );
 		gd.heightHint = 300;
 		gd.widthHint = 120;
@@ -416,13 +405,11 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 		selectedFieldsTable.getTable( ).setHeaderVisible( true );
 
-		TableColumn column1 = new TableColumn( selectedFieldsTable.getTable( ),
-				SWT.LEFT );
+		TableColumn column1 = new TableColumn( selectedFieldsTable.getTable( ),SWT.LEFT );
 		column1.setResizable( true );
 		column1.setWidth( 20 );
 
-		TableColumn column2 = new TableColumn( selectedFieldsTable.getTable( ),
-				SWT.LEFT );
+		TableColumn column2 = new TableColumn( selectedFieldsTable.getTable( ),SWT.LEFT );
 		column2.setText( Messages.getString( "MongoDBDataSetWizardPage.HeaderText.SelectedFields" ) );
 		column2.setResizable( true );
 		column2.setWidth( 180 );
@@ -430,8 +417,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		TableProvider tableProvider = new TableProvider( );
 		selectedFieldsTable.setContentProvider( tableProvider );
 		selectedFieldsTable.setLabelProvider( tableProvider );
-		selectedFieldsTable.getTable( )
-				.addSelectionListener( new SelectionListener( ) {
+		selectedFieldsTable.getTable( ).addSelectionListener( new SelectionListener( ) {
 
 					public void widgetSelected( SelectionEvent e )
 					{
@@ -519,16 +505,13 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 			public void widgetSelected( SelectionEvent e )
 			{
-				doAddSelectedFields( availableFieldsViewer.getTree( )
-						.getSelection( ) );
+				doAddSelectedFields( availableFieldsViewer.getTree( ).getSelection( ) );
 
 				availableFieldsViewer.refresh( );
 				selectedFieldsTable.refresh( );
 
 				deselectAll( );
-				selectedFieldsTable.getTable( )
-						.setSelection( selectedFieldsTable.getTable( )
-								.getItemCount( ) - 1 );
+				selectedFieldsTable.getTable( ).setSelection( selectedFieldsTable.getTable( ).getItemCount( ) - 1 );
 				selectedFieldsTable.getTable( ).setFocus( );
 
 				updateButtons( );
@@ -557,9 +540,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 				if ( availableFieldsViewer.getTree( ).getSelection( )[0].getData( ) instanceof FieldMetaData )
 				{
-					doAddAllChildrenField( (FieldMetaData) availableFieldsViewer.getTree( )
-							.getSelection( )[0].getData( ),
-							false );
+					doAddAllChildrenField( (FieldMetaData) availableFieldsViewer.getTree( ).getSelection( )[0].getData( ),false );
 				}
 				else if ( availableFieldsViewer.getTree( ).getSelection( )[0].getData( ) instanceof FieldEntryWrapper )
 				{
@@ -571,9 +552,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 				selectedFieldsTable.refresh( );
 
 				deselectAll( );
-				selectedFieldsTable.getTable( )
-						.setSelection( selectedFieldsTable.getTable( )
-								.getItemCount( ) - 1 );
+				selectedFieldsTable.getTable( ).setSelection( selectedFieldsTable.getTable( ).getItemCount( ) - 1 );
 				selectedFieldsTable.getTable( ).setFocus( );
 
 				updateButtons( );
@@ -636,13 +615,11 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			{
 				if ( selectedFieldsTable.getTable( ).getSelectionCount( ) == 1 )
 				{
-					int index = selectedFieldsTable.getTable( )
-							.getSelectionIndex( );
+					int index = selectedFieldsTable.getTable( ).getSelectionIndex( );
 					if ( index > 0 )
 					{
 						FieldMetaData field = (FieldMetaData) selectedFields.get( index );
-						selectedFields.set( index,
-								selectedFields.get( index - 1 ) );
+						selectedFields.set( index,selectedFields.get( index - 1 ) );
 						selectedFields.set( index - 1, field );
 						selectedFieldsTable.refresh( );
 						selectedFieldsTable.getTable( ).select( index - 1 );
@@ -669,15 +646,12 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			{
 				if ( selectedFieldsTable.getTable( ).getSelectionCount( ) == 1 )
 				{
-					int index = selectedFieldsTable.getTable( )
-							.getSelectionIndex( );
+					int index = selectedFieldsTable.getTable( ).getSelectionIndex( );
 					if ( index >= 0
-							&& index < ( selectedFieldsTable.getTable( )
-									.getItemCount( ) - 1 ) )
+							&& index < ( selectedFieldsTable.getTable( ).getItemCount( ) - 1 ) )
 					{
 						FieldMetaData field = (FieldMetaData) selectedFields.get( index );
-						selectedFields.set( index,
-								selectedFields.get( index + 1 ) );
+						selectedFields.set( index,selectedFields.get( index + 1 ) );
 						selectedFields.set( index + 1, field );
 						selectedFieldsTable.refresh( );
 						selectedFieldsTable.getTable( ).select( index + 1 );
@@ -697,8 +671,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 	}
 
-	private void doAddAllChildrenField( FieldMetaData field,
-			boolean includeCurrent )
+	private void doAddAllChildrenField( FieldMetaData field,boolean includeCurrent )
 	{
 		if ( includeCurrent || !field.hasChildDocuments( ) )
 		{
@@ -734,8 +707,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	{
 		for ( int i = 0; i < selectedFields.size( ); i++ )
 		{
-			if ( field.getFullDisplayName( ).equals( selectedFields.get( i )
-					.getFullDisplayName( ) ) )
+			if ( field.getFullDisplayName( ).equals( selectedFields.get( i ).getFullDisplayName( ) ) )
 			{
 				return;
 			}
@@ -869,8 +841,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			{
 				if ( isNumber( docNumText.getText( ).trim( ) ) )
 				{
-					searchLimit = Integer.parseInt( docNumText.getText( )
-							.trim( ) );
+					searchLimit = Integer.parseInt( docNumText.getText( ).trim( ) );
 					modelChanged = true;
 				}
 				validateData( );
@@ -962,12 +933,9 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 					}
 
 				}
-				else if ( !collectionCombo.getText( )
-						.equals( oldCollectionName ) )
+				else if ( !collectionCombo.getText( ).equals( oldCollectionName ) )
 				{
-					if ( MessageDialog.open( MessageDialog.QUESTION,
-							getShell( ),
-							Messages.getString( "MongoDBDataSetWizardPage.MessageBox.title.PromptToKeepSelections" ), Messages.getString( "MongoDBDataSetWizardPage.MessageBox.message.PromptToKeepSelections" ), SWT.NONE ) ) //$NON-NLS-1$ //$NON-NLS-2$
+					if ( MessageDialog.open( MessageDialog.QUESTION,getShell( ),Messages.getString( "MongoDBDataSetWizardPage.MessageBox.title.PromptToKeepSelections" ), Messages.getString( "MongoDBDataSetWizardPage.MessageBox.message.PromptToKeepSelections" ), SWT.NONE ) ) //$NON-NLS-1$ //$NON-NLS-2$
 					{
 						selectedFields.clear( );
 						modelChanged = true;
@@ -1092,8 +1060,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		Listener[] selectionListeners = collectionCombo.getListeners( SWT.Selection );
 		for ( int i = 0; i < selectionListeners.length; i++ )
 		{
-			collectionCombo.removeListener( SWT.Selection,
-					selectionListeners[i] );
+			collectionCombo.removeListener( SWT.Selection,selectionListeners[i] );
 		}
 	}
 	
@@ -1118,10 +1085,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 			public void widgetSelected( SelectionEvent e )
 			{
-				if ( opType != null
-						&& opType.displayName( )
-								.trim( )
-								.equals( opTypeCombo.getText( ).trim( ) ) )
+				if ( opType != null&& opType.displayName( ).trim( ).equals( opTypeCombo.getText( ).trim( ) ) )
 				{
 					return;
 				}
@@ -1129,11 +1093,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 				doOpTypeChanged( );
 				handleCommandOperationSelection( );
 
-				if ( opTypeCombo.getText( ).trim( ).length( ) == 0
-						&& collectionCombo.getText( ).trim( ).length( ) > 0
-						&& MessageDialog.open( MessageDialog.QUESTION,
-								getShell( ),
-								Messages.getString( "MongoDBDataSetWizardPage.MessageBox.title.PromptToRefreshAvailableFields" ), Messages.getString( "MongoDBDataSetWizardPage.MessageBox.message.PromptToRefreshAvailableFields" ), SWT.NONE ) ) //$NON-NLS-1$ //$NON-NLS-2$
+				if ( opTypeCombo.getText( ).trim( ).length( ) == 0 && collectionCombo.getText( ).trim( ).length( ) > 0 && MessageDialog.open( MessageDialog.QUESTION,getShell( ),Messages.getString( "MongoDBDataSetWizardPage.MessageBox.title.PromptToRefreshAvailableFields" ), Messages.getString( "MongoDBDataSetWizardPage.MessageBox.message.PromptToRefreshAvailableFields" ), SWT.NONE ) ) //$NON-NLS-1$ //$NON-NLS-2$
 				{
 					doUpdateAvailableFieldsArea( );
 				}
@@ -1157,27 +1117,21 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 			public void widgetSelected( SelectionEvent e )
 			{
-				MDBCommandExpressionBuilder cmdExprDialog = new MDBCommandExpressionBuilder( Display.getDefault( )
-						.getActiveShell( ),
-						opType );
+				MDBCommandExpressionBuilder cmdExprDialog = new MDBCommandExpressionBuilder( Display.getDefault( ).getActiveShell( ),opType );
 				cmdExprDialog.setExpressionText( cmdExprValue );
 				if ( cmdExprDialog.open( ) == Window.OK )
 				{
 					String oldCmdExpr = cmdExprValue;
 					cmdExprValue = cmdExprDialog.getExprText( );
-					if ( cmdExprValue != null
-							&& !cmdExprValue.equals( oldCmdExpr ) )
+					if ( cmdExprValue != null && !cmdExprValue.equals( oldCmdExpr ) )
 					{
 						modelChanged = true;
 						queryProps.setOperationExpression( cmdExprValue );
-						if ( UIHelper.isEmptyString( collectionName )
-								&& allAvailableFields.size( ) == 0 )
+						if ( UIHelper.isEmptyString( collectionName ) && allAvailableFields.size( ) == 0 )
 						{
 							doUpdateAvailableFieldsArea( );
 						}
-						else if ( MessageDialog.open( MessageDialog.QUESTION,
-								getShell( ),
-								Messages.getString( "MongoDBDataSetWizardPage.MessageBox.title.PromptToRefreshAvailableFields" ), Messages.getString( "MongoDBDataSetWizardPage.MessageBox.message.PromptToRefreshAvailableFields" ), SWT.NONE ) ) //$NON-NLS-1$ //$NON-NLS-2$
+						else if ( MessageDialog.open( MessageDialog.QUESTION,getShell( ),Messages.getString( "MongoDBDataSetWizardPage.MessageBox.title.PromptToRefreshAvailableFields" ), Messages.getString( "MongoDBDataSetWizardPage.MessageBox.message.PromptToRefreshAvailableFields" ), SWT.NONE ) ) //$NON-NLS-1$ //$NON-NLS-2$
 						{
 							doUpdateAvailableFieldsArea( );
 						}
@@ -1202,19 +1156,11 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		String type = opType == null ? "" : opType.displayName( ); //$NON-NLS-1$
 		if ( UIHelper.isEmptyString( this.collectionName ) )
 		{
-			opTypeCombo.setItems( new String[]{
-					EMPTY_STRING,
-					CommandOperationType.RUN_DB_COMMAND.displayName( )
-			} );
+			opTypeCombo.setItems( new String[]{EMPTY_STRING,CommandOperationType.RUN_DB_COMMAND.displayName( )} );
 		}
 		else
 		{
-			opTypeCombo.setItems( new String[]{
-					EMPTY_STRING,
-					CommandOperationType.AGGREGATE.displayName( ),
-					CommandOperationType.MAP_REDUCE.displayName( ),
-					CommandOperationType.RUN_DB_COMMAND.displayName( )
-			} );
+			opTypeCombo.setItems( new String[]{EMPTY_STRING,CommandOperationType.AGGREGATE.displayName( ),CommandOperationType.MAP_REDUCE.displayName( ),CommandOperationType.RUN_DB_COMMAND.displayName( )} );
 		}
 		opTypeCombo.getItems( );
 		opTypeCombo.setText( type );
@@ -1255,8 +1201,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		DesignerState odaState = getInitializationDesignerState( );
 		if ( odaState != null )
 		{
-			String value = odaState.getStateContent( )
-					.getStateContentAsString( );
+			String value = odaState.getStateContent( ).getStateContentAsString( );
 			String[] splits = value.split( DESIGNER_STATE_SEPARATOR );
 			if ( splits.length == 2 )
 			{
@@ -1309,13 +1254,11 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		opTypeCombo.removeSelectionListener( opTypeSelectionListener );
 
 		resetCollectionComboItems( );
-		collectionCombo.setText( collectionName == null ? EMPTY_STRING
-				: collectionName );
+		collectionCombo.setText( collectionName == null ? EMPTY_STRING : collectionName );
 
 		resetOpTypeComboItems( );
 		
-		opTypeCombo.setText( opType == null ? EMPTY_STRING
-				: opType.displayName( ) );
+		opTypeCombo.setText( opType == null ? EMPTY_STRING : opType.displayName( ) );
 		handleCommandOperationSelection( );
 		resetOpTypeComboItems( );
 
@@ -1323,9 +1266,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 		try
 		{
-			if ( CommandOperationType.RUN_DB_COMMAND.name( )
-					.equals( opType.name( ) )
-					|| !UIHelper.isEmptyString( collectionName ) )
+			if ( CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) ) || !UIHelper.isEmptyString( collectionName ) )
 			{
 				updateAvailableFieldsList( );
 			}
@@ -1354,10 +1295,8 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		}
 		catch ( IOException e )
 		{
-			ExceptionHandler.showException( getShell( ),
-					Messages.getString( "MongoDBDataSetWizardPage.MessageDialog.title.GeneralError" ), //$NON-NLS-1$
-					e.getMessage( ),
-					e );
+			ExceptionHandler.showException( getShell( ),Messages.getString( "MongoDBDataSetWizardPage.MessageDialog.title.GeneralError" ), //$NON-NLS-1$  
+					e.getMessage( ),e );
 		}
 
 		addCollectionComboListeners( );
@@ -1369,27 +1308,18 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		if ( metaData == null )
 			return;
 
-		if ( CommandOperationType.RUN_DB_COMMAND.name( )
-				.equals( opType.name( ) )
-				|| !UIHelper.isEmptyString( collectionName ) )
+		if ( CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) )|| !UIHelper.isEmptyString( collectionName ) )
 		{
 			if ( treeEntry == null )
 			{
-				treeEntry = new FieldEntryWrapper( collectionName,
-						metaData,
-						searchLimit,
-						queryProps );
-				availableFieldsViewer.setInput( new FieldEntryWrapper[]{
-					treeEntry
-				} );
+				treeEntry = new FieldEntryWrapper( collectionName,metaData,searchLimit,queryProps );
+				availableFieldsViewer.setInput( new FieldEntryWrapper[]{treeEntry} );
 			}
 			else if ( availableFieldsViewer.getInput( ) == null )
 			{
 				treeEntry.setCollectionName( collectionName );
 				treeEntry.setMetaData( metaData );
-				availableFieldsViewer.setInput( new FieldEntryWrapper[]{
-					treeEntry
-				} );
+				availableFieldsViewer.setInput( new FieldEntryWrapper[]{treeEntry} );
 			}
 			else
 			{
@@ -1423,10 +1353,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 				{
 					if ( treeEntry == null )
 					{
-						treeEntry = new FieldEntryWrapper( collectionName,
-								metaData,
-								searchLimit,
-								queryProps );
+						treeEntry = new FieldEntryWrapper( collectionName,metaData,searchLimit,queryProps );
 					}
 					else
 					{
@@ -1474,21 +1401,15 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	{
 		if ( availableFieldsViewer.getTree( ).isFocusControl( ) )
 		{
-			if ( availableFieldsViewer.getTree( ).getSelectionCount( ) > 0
-					&& ( availableFieldsViewer.getTree( ).getSelection( )[0].getData( ) instanceof FieldEntryWrapper ) )
+			if ( availableFieldsViewer.getTree( ).getSelectionCount( ) > 0 && ( availableFieldsViewer.getTree( ).getSelection( )[0].getData( ) instanceof FieldEntryWrapper ) )
 			{
 				addBtn.setEnabled( false );
 			}
 			else
 			{
-				addBtn.setEnabled( availableFieldsViewer.getTree( )
-						.getSelectionCount( ) > 0
-						&& !containsSelectedField( availableFieldsViewer.getTree( )
-								.getSelection( ) ) );
+				addBtn.setEnabled( availableFieldsViewer.getTree( ).getSelectionCount( ) > 0 && !containsSelectedField( availableFieldsViewer.getTree( ).getSelection( ) ) );
 			}
-			addAllBtn.setEnabled( selectedFields.size( ) < allAvailableFields.size( )
-					&& containsUnselectedItem( availableFieldsViewer.getTree( )
-							.getSelection( ) ) );
+			addAllBtn.setEnabled( selectedFields.size( ) < allAvailableFields.size( ) && containsUnselectedItem( availableFieldsViewer.getTree( ).getSelection( ) ) );
 			removeBtn.setEnabled( false );
 			upBtn.setEnabled( false );
 			downBtn.setEnabled( false );
@@ -1497,8 +1418,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		{
 			addBtn.setEnabled( false );
 			addAllBtn.setEnabled( false );
-			removeBtn.setEnabled( selectedFieldsTable.getTable( )
-					.getSelectionCount( ) > 0 );
+			removeBtn.setEnabled( selectedFieldsTable.getTable( ).getSelectionCount( ) > 0 );
 
 			if ( selectedFieldsTable.getTable( ).getSelectionCount( ) == 1 )
 			{
@@ -1539,10 +1459,8 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		else
 		{
 			createMenuItems( );
-			menuRemove.setEnabled( selectedFieldsTable.getTable( )
-					.getSelection( ).length > 0 );
-			menuRemoveAll.setEnabled( selectedFieldsTable.getTable( )
-					.getItemCount( ) > 0 );
+			menuRemove.setEnabled( selectedFieldsTable.getTable( ).getSelection( ).length > 0 );
+			menuRemoveAll.setEnabled( selectedFieldsTable.getTable( ).getItemCount( ) > 0 );
 		}
 	}
 
@@ -1581,8 +1499,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	
 	private boolean containsUnselectedItem( TreeItem[] items )
 	{
-		if ( items.length > 0
-				&& items[0].getData( ) instanceof FieldEntryWrapper )
+		if ( items.length > 0 && items[0].getData( ) instanceof FieldEntryWrapper )
 		{
 			return containsUnselectedItem( items[0].getItems( ), true );
 		}
@@ -1592,8 +1509,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		}
 	}
 
-	private boolean containsUnselectedItem( TreeItem[] items,
-			boolean includeCurrent )
+	private boolean containsUnselectedItem( TreeItem[] items,boolean includeCurrent )
 	{
 		for ( int i = 0; i < items.length; i++ )
 		{
@@ -1614,8 +1530,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 						return true;
 					}
 				}
-				else if ( field.hasChildDocuments( )
-						&& !allChildrenSelected( field, includeCurrent ) )
+				else if ( field.hasChildDocuments( ) && !allChildrenSelected( field, includeCurrent ) )
 				{
 					return true;
 				}
@@ -1624,8 +1539,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		return false;
 	}
 
-	private boolean allChildrenSelected( FieldMetaData fieldMataData,
-			boolean includeCurrent )
+	private boolean allChildrenSelected( FieldMetaData fieldMataData, boolean includeCurrent )
 	{
 		if ( fieldMataData.hasChildDocuments( ) )
 		{
@@ -1678,9 +1592,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	{
 		boolean isValid = true;
 
-		if ( !CommandOperationType.RUN_DB_COMMAND.name( )
-				.equals( opType.name( ) )
-				&& UIHelper.isEmptyString( collectionName ) )
+		if ( !CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) ) && UIHelper.isEmptyString( collectionName ) )
 		{
 			isValid = false;
 			setMessage( Messages.getString( "MongoDBDataSetWizardPage.message.error.MissingCollectionName" ), //$NON-NLS-1$
@@ -1762,8 +1674,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		DesignerState odaState = factory.createDesignerState( );
 		DesignerStateContent content = factory.createDesignerStateContent( );
 
-		String value = String.valueOf( this.includeSysColl )
-				+ DESIGNER_STATE_SEPARATOR + String.valueOf( this.searchLimit );
+		String value = String.valueOf( this.includeSysColl ) + DESIGNER_STATE_SEPARATOR + String.valueOf( this.searchLimit );
 		content.setStateContentAsString( value );
 
 		odaState.setStateContent( content );
@@ -1792,8 +1703,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			dataSetDesign.setResultSets( null );
 
 			String errorMsg = UIHelper.getUserErrorMessage( "MongoDBDataSetWizardPage.ExceptionDialog.message.SavaPage", e ); //$NON-NLS-1$
-			ExceptionHandler.showException( sComposite.getShell( ),
-					Messages.getString( "MongoDBDataSetWizardPage.ExceptionDialog.title" ), errorMsg, e ); //$NON-NLS-1$
+			ExceptionHandler.showException( sComposite.getShell( ),Messages.getString( "MongoDBDataSetWizardPage.ExceptionDialog.title" ), errorMsg, e ); //$NON-NLS-1$
 			setPageComplete( false );
 			// e.printStackTrace( );
 		}
@@ -1880,8 +1790,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 				QueryModel.validateCommandSyntax( opType, cmdExprValue );
 			}
 
-			if ( opType == CommandOperationType.DYNAMIC_QUERY
-					|| opType == CommandOperationType.MAP_REDUCE )
+			if ( opType == CommandOperationType.DYNAMIC_QUERY || opType == CommandOperationType.MAP_REDUCE )
 			{
 				// validate the query expression, if exists
 				if ( !UIHelper.isEmptyString( queryExpr ) )
@@ -1911,9 +1820,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 					usrMsgKey = "MongoDBDataSetWizardPage.ExceptionDialog.message.InvalidSortExpression";break; //$NON-NLS-1$
 			}
 			String errorMsg = UIHelper.getUserErrorMessage( usrMsgKey, e );
-			ExceptionHandler.showException( Display.getDefault( )
-					.getActiveShell( ),
-					Messages.getString( "MongoDBDataSetWizardPage.ExceptionDialog.title" ), errorMsg, e ); //$NON-NLS-1$
+			ExceptionHandler.showException( Display.getDefault( ).getActiveShell( ),Messages.getString( "MongoDBDataSetWizardPage.ExceptionDialog.title" ), errorMsg, e ); //$NON-NLS-1$
 			setMessage( Messages.getString( usrMsgKey ), ERROR );
 			setPageComplete( false );
 			return false;
@@ -1945,10 +1852,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 		for ( int i = 0; i < allAvailableFields.size( ); i++ )
 		{
-			if ( field.equals( allAvailableFields.get( i ) )
-					|| field.getFullDisplayName( )
-							.equals( allAvailableFields.get( i )
-									.getFullDisplayName( ) ) )
+			if ( field.equals( allAvailableFields.get( i ) )|| field.getFullDisplayName( ).equals( allAvailableFields.get( i ).getFullDisplayName( ) ) )
 			{
 				return true;
 			}
@@ -1987,9 +1891,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	private void handleCommandOperationSelection( )
 	{
 		cmdExprBtn.setEnabled( opType.displayName( ).trim( ).length( ) > 0 );
-		boolean collectionAreaEnabled = opType == null
-				|| !CommandOperationType.RUN_DB_COMMAND.name( )
-						.equals( opType.name( ) );
+		boolean collectionAreaEnabled = opType == null || !CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) );
 		sysCollOption.setEnabled( collectionAreaEnabled );
 		refreshBtn.setEnabled( collectionAreaEnabled );
 		resetExprBtnStatus( );
@@ -2011,10 +1913,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 	private void resetExprBtnStatus( )
 	{
-		boolean queryExprBtnEnabled = !CommandOperationType.AGGREGATE.name( )
-				.equals( opType.name( ) )
-				&& !CommandOperationType.RUN_DB_COMMAND.name( )
-						.equals( opType.name( ) );
+		boolean queryExprBtnEnabled = !CommandOperationType.AGGREGATE.name( ).equals( opType.name( ) ) && !CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) );
 		boolean sortExprBtnEnabled = queryExprBtnEnabled;
 		queryExprBtn.setEnabled( queryExprBtnEnabled );
 		// now Sort Expression Button is enabled in the same case with the Query
@@ -2033,8 +1932,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		availableFieldsViewer.getTree( ).setFocus( );
 		if ( availableFieldsViewer.getTree( ).getTopItem( ) != null )
 		{
-			availableFieldsViewer.getTree( )
-					.select( availableFieldsViewer.getTree( ).getTopItem( ) );
+			availableFieldsViewer.getTree( ).select( availableFieldsViewer.getTree( ).getTopItem( ) );
 		}
 		updateButtons( );
 	}
@@ -2075,9 +1973,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 				public void run( )
 				{
 					String errorMsg = UIHelper.getUserErrorMessage( "MongoDBDataSetWizardPage.ExceptionDialog.message.FindFields", e ); //$NON-NLS-1$
-					ExceptionHandler.showException( Display.getDefault( )
-							.getActiveShell( ),
-							Messages.getString( "MongoDBDataSetWizardPage.ExceptionDialog.title" ), errorMsg, e ); //$NON-NLS-1$
+					ExceptionHandler.showException( Display.getDefault( ).getActiveShell( ),Messages.getString( "MongoDBDataSetWizardPage.ExceptionDialog.title" ), errorMsg, e ); //$NON-NLS-1$
 					flag = false;
 				}
 			} );
@@ -2114,8 +2010,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			}
 			else if ( focusIndex >= tableFieldsCount )
 			{
-				selectedFieldsTable.getTable( )
-						.setSelection( tableFieldsCount - 1 );
+				selectedFieldsTable.getTable( ).setSelection( tableFieldsCount - 1 );
 			}
 			else
 			{
@@ -2128,9 +2023,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	}
 
 	private class TableProvider
-			implements
-				IStructuredContentProvider,
-				ITableLabelProvider
+			implements IStructuredContentProvider, ITableLabelProvider
 	{
 
 		public void dispose( )
@@ -2138,8 +2031,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 		}
 
-		public void inputChanged( Viewer viewer, Object oldInput,
-				Object newInput )
+		public void inputChanged( Viewer viewer, Object oldInput,Object newInput )
 		{
 
 		}
@@ -2212,9 +2104,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 	}
 
 	private class FieldsTreeProvider
-			implements
-				ITreeContentProvider,
-				ILabelProvider
+			implements ITreeContentProvider, ILabelProvider
 	{
 
 		public void dispose( )
@@ -2222,8 +2112,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 
 		}
 
-		public void inputChanged( Viewer viewer, Object oldInput,
-				Object newInput )
+		public void inputChanged( Viewer viewer, Object oldInput,Object newInput )
 		{
 
 		}
@@ -2266,9 +2155,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 			{
 				if ( element instanceof FieldEntryWrapper )
 				{
-					if ( CommandOperationType.RUN_DB_COMMAND.name( )
-							.equals( opType.name( ) )
-							|| UIHelper.isEmptyString( collectionName ) )
+					if ( CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) )|| UIHelper.isEmptyString( collectionName ) )
 						return UIHelper.getDatabaseDisplayImage( );
 
 					return UIHelper.getCollectionDisplayImage( );
@@ -2303,9 +2190,7 @@ public class MongoDBDataSetWizardPage extends DataSetWizardPage
 		{
 			if ( element instanceof FieldEntryWrapper )
 			{
-				if ( CommandOperationType.RUN_DB_COMMAND.name( )
-						.equals( opType.name( ) )
-						|| UIHelper.isEmptyString( collectionName ) )
+				if ( CommandOperationType.RUN_DB_COMMAND.name( ).equals( opType.name( ) ) || UIHelper.isEmptyString( collectionName ) )
 					return metaData.getDatabaseName( );
 
 				return ( (FieldEntryWrapper) element ).getCollectionName( );
