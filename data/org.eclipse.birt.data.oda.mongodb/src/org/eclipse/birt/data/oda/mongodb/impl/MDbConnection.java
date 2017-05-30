@@ -56,8 +56,7 @@ public class MDbConnection implements IConnection
 
 	}
 
-	public static MongoDatabase getMongoDatabase( Properties connProperties )
-			throws OdaException
+	public static MongoDatabase getMongoDatabase( Properties connProperties )throws OdaException
 	{
 		MongoClient mongoClient = MongoDBDriver.getMongoNode( connProperties );
 		// to avoid potential conflict in shared DB, ReadPreference is exposed
@@ -69,14 +68,11 @@ public class MDbConnection implements IConnection
 		MongoDatabase dbInstance = null;
 		try
 		{
-			Boolean dbExists = existsDatabase( mongoClient,
-					dbName,
-					connProperties );
+			Boolean dbExists = existsDatabase( mongoClient,dbName,connProperties );
 			if ( dbExists != null && !dbExists ) // does not exist for sure
 			{
 				// do not proceed to create new database instance
-				throw new OdaException( Messages.bind(
-						Messages.mDbConnection_invalidDatabaseName, dbName ) );
+				throw new OdaException( Messages.bind( Messages.mDbConnection_invalidDatabaseName,dbName ) );
 			}
 
 			dbInstance = mongoClient.getDatabase( dbName );
@@ -84,12 +80,7 @@ public class MDbConnection implements IConnection
 		}
 		catch ( Exception ex )
 		{
-			MongoDBDriver.getLogger( ).log( Level.SEVERE,
-					"Unable to get Database "
-							+ dbName
-							+ ". "
-							+ ex.getMessage( ),
-					ex );
+			MongoDBDriver.getLogger( ).log( Level.SEVERE,"Unable to get Database "+ dbName + ". " + ex.getMessage( ),ex );
 			throw new OdaException( ex );
 		}
 		return dbInstance;
@@ -204,11 +195,9 @@ public class MDbConnection implements IConnection
 			String username = MongoDBDriver.getUserName( connProps );
 			// String dbName = MongoDBDriver.getDatabaseName( connProps );
 
-			MongoDBDriver.getLogger( ).info( Messages.bind(
-					"Unable to authenticate user (${0}) in database (${1}).\n ${2}", //$NON-NLS-1$
-					new Object[]{
-							username, mongoDb, odaEx.getCause( ).getMessage( )
-					} ) );
+			MongoDBDriver.getLogger( ).info( Messages.bind( "Unable to authenticate user (${0}) in database (${1}).\n ${2}", //$NON-NLS-1$
+							new Object[]{username,mongoDb,odaEx.getCause( ).getMessage( )
+							} ) );
 			throw odaEx;
 		}
 	}
@@ -222,8 +211,7 @@ public class MDbConnection implements IConnection
 		}
 		try
 		{
-			MongoIterable<String> databaseNameIterable = mongoClient
-					.listDatabaseNames( );
+			MongoIterable<String> databaseNameIterable = mongoClient.listDatabaseNames( );
 			for ( String databaseName : databaseNameIterable )
 			{
 				if ( dbName.equals( databaseName ) )
@@ -234,9 +222,7 @@ public class MDbConnection implements IConnection
 		}
 		catch ( MongoException ex )
 		{
-			MongoDBDriver.getLogger( ).log( Level.SEVERE,
-					"Unable to get listDatabaseNames",
-					ex ); // unable
+			MongoDBDriver.getLogger( ).log( Level.SEVERE,"Unable to get listDatabaseNames",ex ); // unable
 							// to
 							// get
 							// db
