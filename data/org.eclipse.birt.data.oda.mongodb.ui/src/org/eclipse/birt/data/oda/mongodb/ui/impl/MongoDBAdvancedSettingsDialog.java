@@ -45,13 +45,11 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 
 	private static String DIALOG_TITLE = Messages.getString( "MongoDBAdvancedSettingsDialog.dialogTitle" ); //$NON-NLS-1$
 
-	private String batchSizeValue, docSearchLimitValue, maxSkipDocValue,
-			indexExpr, queryPreferenceMode, tagSetValue;
+	private String batchSizeValue, docSearchLimitValue, maxSkipDocValue,indexExpr, queryPreferenceMode, tagSetValue;
 
 	private Combo queryPreferenceModeCombo;
 	private Text batchSizeText, docSearchLimitText, maxSkipDocText,tagSetText;
-	private Button allowPartialResultsCheckbox,
-			flattenNestedDocCheckbox;
+	private Button allowPartialResultsCheckbox,flattenNestedDocCheckbox;
 	private boolean noTimeOut, allowsPartialResults, flattenNestedDocument;
 
 	public MongoDBAdvancedSettingsDialog( Shell parent )
@@ -225,8 +223,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 
 			public void widgetSelected( SelectionEvent e )
 			{
-				queryPreferenceMode = queryPreferenceModeCombo.getText( )
-						.trim( );
+				queryPreferenceMode = queryPreferenceModeCombo.getText( ).trim( );
 				updateTagSetTextStatus( );
 			}
 
@@ -268,8 +265,7 @@ public class MongoDBAdvancedSettingsDialog extends StatusDialog
 	
 	private void updateTagSetTextStatus( )
 	{
-		tagSetText.setEnabled( !ReadPreferenceChoice.PRIMARY.displayName( )
-				.equals( queryPreferenceModeCombo.getText( ).trim( ) ) );
+		tagSetText.setEnabled( !ReadPreferenceChoice.PRIMARY.displayName( ).equals( queryPreferenceModeCombo.getText( ).trim( ) ) );
 	}
 
 	private void validatePageStatus( )
