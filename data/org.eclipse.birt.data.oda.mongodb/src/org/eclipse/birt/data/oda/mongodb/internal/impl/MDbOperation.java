@@ -56,9 +56,7 @@ public class MDbOperation
 		if ( queryModel == null || !queryModel.isValid( ) )
 			throw new IllegalArgumentException( "null/invalid QueryModel" ); //$NON-NLS-1$
 
-		return queryModel.getQueryProperties( ).hasValidCommandOperation( )
-				? sm_factory.new CommandOperation( queryModel )
-				: new MDbOperation( queryModel );
+		return queryModel.getQueryProperties( ).hasValidCommandOperation( )? sm_factory.new CommandOperation( queryModel ) : new MDbOperation( queryModel );
 	}
 
 	private MDbOperation( )
@@ -93,8 +91,7 @@ public class MDbOperation
 		m_rsMetaData = null;
 	}
 
-	protected void prepare( MongoCollection<Document> dbCollection )
-			throws OdaException
+	protected void prepare( MongoCollection<Document> dbCollection ) throws OdaException
 	{
 		resetPreparedState( );
 
@@ -113,8 +110,7 @@ public class MDbOperation
 			queryObj = new BasicDBObject( );
 
 		// specify fields to retrieve
-		BasicDBObject fieldsObj = queryProps
-				.getSelectedFieldsAsProjectionKeys( );
+		BasicDBObject fieldsObj = queryProps.getSelectedFieldsAsProjectionKeys( );
 
 		try
 		{
@@ -127,9 +123,7 @@ public class MDbOperation
 			// getting metadata
 			applyPropertiesToCursor( findIterable, queryProps, true, false );
 
-			m_rsMetaData = new MDbResultSetMetaData( findIterable,
-					queryProps.getSelectedFieldNames( ),
-					queryProps.isAutoFlattening( ) );
+			m_rsMetaData = new MDbResultSetMetaData( findIterable,queryProps.getSelectedFieldNames( ),queryProps.isAutoFlattening( ) );
 
 			// no exception; the find arguments on specified dbCollection are
 			// valid
@@ -140,9 +134,8 @@ public class MDbOperation
 		}
 		catch ( RuntimeException ex )
 		{
-			DriverUtil.getLogger( ).log( Level.SEVERE,
-					"Encountered RuntimeException in QueryModel#prepareQuery(DBCollection).", //$NON-NLS-1$
-					ex );
+			DriverUtil.getLogger( ).log( Level.SEVERE,"Encountered RuntimeException in QueryModel#prepareQuery(DBCollection).", //$NON-NLS-1$
+							ex );
 			throw new OdaException( ex );
 		}
 	}
@@ -154,25 +147,18 @@ public class MDbOperation
 
 		try
 		{
-			FindIterable<Document> findIterable = m_queryCollection
-					.find( m_queryObj );
+			FindIterable<Document> findIterable = m_queryCollection.find( m_queryObj );
 			findIterable = findIterable.projection( m_fieldsObj );
 
 			// no search limit applies here;
 			// defer to MDbResultSet to set DBCursor#limit based on its maxRows
-			applyPropertiesToCursor( findIterable,
-					getModel( ).getQueryProperties( ),
-					false,
-					true );
+			applyPropertiesToCursor( findIterable,getModel( ).getQueryProperties( ),false,true );
 
-			return new MDbResultSet( findIterable.iterator( ),
-					getResultSetMetaData( ),
-					getModel( ).getQueryProperties( ) );
+			return new MDbResultSet( findIterable.iterator( ),getResultSetMetaData( ),getModel( ).getQueryProperties( ) );
 		}
 		catch ( RuntimeException ex )
 		{
-			DriverUtil.getLogger( ).log( Level.SEVERE,
-					"Encountered RuntimeException: ", //$NON-NLS-1$
+			DriverUtil.getLogger( ).log( Level.SEVERE,"Encountered RuntimeException: ", //$NON-NLS-1$
 					ex );
 			throw new OdaException( ex );
 		}
@@ -181,14 +167,11 @@ public class MDbOperation
 	/*
 	 * Applies data set query properties and hints on DBCursor.
 	 */
-	private void applyPropertiesToCursor( MongoIterable<Document> mongoIterable,
-			QueryProperties queryProps, boolean includeMetaDataSearchLimit,
-			boolean includeSortExpr )
+	private void applyPropertiesToCursor(MongoIterable<Document> mongoIterable, QueryProperties queryProps,boolean includeMetaDataSearchLimit, boolean includeSortExpr )
 	{
 		if ( includeMetaDataSearchLimit )
 		{
-			Integer searchLimit = getModel( )
-					.getEffectiveMDSearchLimit( queryProps );
+			Integer searchLimit = getModel( ).getEffectiveMDSearchLimit( queryProps );
 			if ( searchLimit > 0 )
 			{
 				// Apply to FindIterable or MapReduceIterable
@@ -214,8 +197,7 @@ public class MDbOperation
 	 * 
 	 * @see #applyPropertiesToCursor(DBCursor,QueryProperties,boolean,boolean)
 	 */
-	static void applyPropertiesToCursor( MongoIterable<Document> mongoIterable,
-			QueryProperties queryProps, boolean includeSortExpr )
+	static void applyPropertiesToCursor( MongoIterable<Document> mongoIterable,QueryProperties queryProps, boolean includeSortExpr )
 	{
 		BasicDBObject sortExprObj = null;
 		if ( includeSortExpr ) // normally done only when executing a query to
@@ -229,11 +211,8 @@ public class MDbOperation
 			catch ( OdaException ex )
 			{
 				// log warning and ignore
-				DriverUtil.getLogger( ).log( Level.WARNING,
-						Messages.bind(
-								"Unable to parse the user-defined Sort Expression: {0}", //$NON-NLS-1$
-								queryProps.getSortExpr( ) ),
-						ex );
+				DriverUtil.getLogger( ).log( Level.WARNING,Messages.bind( "Unable to parse the user-defined Sort Expression: {0}", //$NON-NLS-1$
+										queryProps.getSortExpr( ) ),ex );
 			}
 
 		}
@@ -254,9 +233,7 @@ public class MDbOperation
 		{
 			mapReduceIterable = (MapReduceIterable<Document>) mongoIterable;
 		}
-		if ( findIterable == null
-				&& aggregateIterable == null
-				&& mapReduceIterable == null )
+		if ( findIterable == null && aggregateIterable == null && mapReduceIterable == null )
 		{
 			// Unknown type, return
 		}
@@ -336,16 +313,14 @@ public class MDbOperation
 			resetPreparedState( );
 
 			QueryProperties queryProps = getModel( ).getQueryProperties( );
-			QueryModel.validateCommandSyntax( queryProps.getOperationType( ),
-					queryProps.getOperationExpression( ) );
+			QueryModel.validateCommandSyntax( queryProps.getOperationType( ),queryProps.getOperationExpression( ) );
 
 			// call the specified command
 			Iterable<Document> cmdResults = null;
 			if ( queryProps.hasAggregateCommand( ) )
 				cmdResults = callAggregateCmd( dbCollection, queryProps );
 			else if ( queryProps.hasRunCommand( ) )
-				cmdResults = callDBCommand( getModel( ).getConnectedDB( ),
-						queryProps );
+				cmdResults = callDBCommand( getModel( ).getConnectedDB( ),queryProps );
 			else if ( queryProps.hasMapReduceCommand( ) )
 			{
 				cmdResults = callMapReduceCmd( dbCollection, queryProps );
@@ -362,10 +337,7 @@ public class MDbOperation
 			if ( cmdResults == null )
 				return;
 
-			setResultSetMetaData( new MDbResultSetMetaData( cmdResults,
-					getModel( ).getEffectiveMDSearchLimit( queryProps ),
-					queryProps.getSelectedFieldNames( ),
-					queryProps.isAutoFlattening( ) ) );
+			setResultSetMetaData( new MDbResultSetMetaData( cmdResults,getModel( ).getEffectiveMDSearchLimit( queryProps ),queryProps.getSelectedFieldNames( ),queryProps.isAutoFlattening( ) ) );
 
 			// no exception thus far, ok to cache the command result objects
 			m_cmdResultObjs = cmdResults;
@@ -384,9 +356,7 @@ public class MDbOperation
 			if ( m_cmdResultObjs == null )
 				throw new OdaException( Messages.mDbOp_noCmdResults );
 
-			return new MDbResultSet( m_cmdResultObjs.iterator( ),
-					getResultSetMetaData( ),
-					getModel( ).getQueryProperties( ) );
+			return new MDbResultSet( m_cmdResultObjs.iterator( ),getResultSetMetaData( ),getModel( ).getQueryProperties( ) );
 		}
 
 		protected QueryProperties getEffectiveProperties( )
@@ -399,8 +369,7 @@ public class MDbOperation
 
 			// remove n/a queryExpr and sortExpr, if exists, from effective
 			// properties
-			if ( queryProps.getFindQueryExpr( ).isEmpty( )
-					&& queryProps.getSortExpr( ).isEmpty( ) )
+			if ( queryProps.getFindQueryExpr( ).isEmpty( ) && queryProps.getSortExpr( ).isEmpty( ) )
 				return queryProps; // nothing to remove
 
 			QueryProperties effectiveProps = QueryProperties.copy( queryProps );
@@ -410,20 +379,16 @@ public class MDbOperation
 		}
 	}
 
-	static AggregateIterable<Document> callAggregateCmd(
-			MongoCollection<Document> mongoCollection,
-			QueryProperties queryProps ) throws OdaException
+	static AggregateIterable<Document> callAggregateCmd(MongoCollection<Document> mongoCollection,QueryProperties queryProps ) throws OdaException
 	{
 		if ( !queryProps.hasAggregateCommand( ) )
 			return null;
-		DBObject operationExprObj = queryProps
-				.getOperationExprAsParsedObject( true );
+		DBObject operationExprObj = queryProps.getOperationExprAsParsedObject( true );
 		if ( operationExprObj == null )
 			return null;
 
 		// convert user-specified operation expression to operation pipeline
-		List<Document> operationList = QueryProperties
-				.getObjectsAsDocumentList( operationExprObj );
+		List<Document> operationList = QueryProperties.getObjectsAsDocumentList( operationExprObj );
 		// DBObject firstOp = QueryProperties.getFirstObjectSet(
 		// operationExprObj );
 		if ( operationList == null )
@@ -446,16 +411,13 @@ public class MDbOperation
 		}
 		catch ( RuntimeException ex )
 		{
-			OdaException odaEx = new OdaException(
-					Messages.mDbOp_aggrCmdFailed );
+			OdaException odaEx = new OdaException( Messages.mDbOp_aggrCmdFailed );
 			odaEx.initCause( ex );
 			throw odaEx;
 		}
 	}
 
-	static MapReduceIterable<Document> callMapReduceCmd(
-			MongoCollection<Document> mongoCollection,
-			QueryProperties queryProps ) throws OdaException
+	static MapReduceIterable<Document> callMapReduceCmd(MongoCollection<Document> mongoCollection,QueryProperties queryProps ) throws OdaException
 	{
 
 		if ( !queryProps.hasMapReduceCommand( ) )
@@ -466,9 +428,7 @@ public class MDbOperation
 
 		if ( !( command instanceof BasicDBObject ) )
 		{
-			throw new OdaException( Messages.bind(
-					"Unexpected data type ({0}) in Selected Fields property value in MapReduce command",
-					command.getClass( ).getSimpleName( ) ) );
+			throw new OdaException( Messages.bind("Unexpected data type ({0}) in Selected Fields property value in MapReduce command",command.getClass( ).getSimpleName( ) ) );
 		}
 		String mapFunction = null;
 		String reduceFunction = null;
@@ -479,10 +439,7 @@ public class MDbOperation
 		}
 		else
 		{
-			throw new OdaException(
-					Messages.bind( "Unexpected data type ({0}) in {1} function",
-							command.getClass( ).getSimpleName( ),
-							QueryModel.MAP_REDUCE_MAP_FUNCTION ) );
+			throw new OdaException(Messages.bind( "Unexpected data type ({0}) in {1} function",command.getClass( ).getSimpleName( ),QueryModel.MAP_REDUCE_MAP_FUNCTION ) );
 		}
 		object = command.get( QueryModel.MAP_REDUCE_REDUCE_FUNCTION );
 		if ( object instanceof String )
@@ -491,11 +448,7 @@ public class MDbOperation
 		}
 		else
 		{
-			throw new OdaException(
-					Messages.bind( Messages.driverUtil_invalidExpr,
-							command.getClass( ).getSimpleName( )
-									+ " in "
-									+ QueryModel.MAP_REDUCE_REDUCE_FUNCTION ) );
+			throw new OdaException(Messages.bind( Messages.driverUtil_invalidExpr,command.getClass( ).getSimpleName( )+ " in "+ QueryModel.MAP_REDUCE_REDUCE_FUNCTION ) );
 		}
 
 		// mapReduce command's optional "limit" parameter applies to the number
@@ -506,8 +459,7 @@ public class MDbOperation
 		// execute the mapreduce command
 		try
 		{
-			MapReduceIterable<Document> mapReduceIterable = mongoCollection
-					.mapReduce( mapFunction, reduceFunction );
+			MapReduceIterable<Document> mapReduceIterable = mongoCollection.mapReduce( mapFunction, reduceFunction );
 
 			object = command.get( "finalize" );
 			String finalizeFunction = null;
@@ -519,31 +471,24 @@ public class MDbOperation
 				}
 				else
 				{
-					throw new OdaException( Messages.bind(
-							"Unexpected data type ({0}) in {1} function",
-							command.getClass( ).getSimpleName( ),
-							"finalize" ) );
+					throw new OdaException( Messages.bind("Unexpected data type ({0}) in {1} function",command.getClass( ).getSimpleName( ),"finalize" ) );
 				}
 			}
 			if ( finalizeFunction != null )
 			{
-				mapReduceIterable = mapReduceIterable
-						.finalizeFunction( finalizeFunction );
+				mapReduceIterable = mapReduceIterable.finalizeFunction( finalizeFunction );
 			}
 			return mapReduceIterable;
 		}
 		catch ( RuntimeException ex )
 		{
-			OdaException odaEx = new OdaException(
-					Messages.bind( Messages.mDbOp_mapReduceCmdFailed,
-							queryProps.getOperationExpression( ) ) );
+			OdaException odaEx = new OdaException(Messages.bind( Messages.mDbOp_mapReduceCmdFailed,queryProps.getOperationExpression( ) ) );
 			odaEx.initCause( ex );
 			throw odaEx;
 		}
 	}
 
-	static Iterable<Document> callDBCommand( MongoDatabase connectedDB,
-			QueryProperties queryProps ) throws OdaException
+	static Iterable<Document> callDBCommand( MongoDatabase connectedDB,QueryProperties queryProps ) throws OdaException
 	{
 		if ( !queryProps.hasRunCommand( ) )
 			return null;
@@ -553,8 +498,7 @@ public class MDbOperation
 
 		try
 		{
-			Document documentCommand = QueryProperties
-					.getDocument( (BasicDBObject) command );
+			Document documentCommand = QueryProperties.getDocument( (BasicDBObject) command );
 			Document result = connectedDB.runCommand( documentCommand );
 			List<Document> iterable = new ArrayList<Document>( );
 			iterable.add( result );
@@ -562,9 +506,7 @@ public class MDbOperation
 		}
 		catch ( RuntimeException ex )
 		{
-			OdaException odaEx = new OdaException(
-					Messages.bind( Messages.mDbOp_dbCmdFailed,
-							queryProps.getOperationExpression( ) ) );
+			OdaException odaEx = new OdaException( Messages.bind( Messages.mDbOp_dbCmdFailed,queryProps.getOperationExpression( ) ) );
 			odaEx.initCause( ex );
 			throw odaEx;
 		}
